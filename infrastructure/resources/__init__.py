@@ -1,0 +1,2 @@
+from infrastructure.resources.contacts import ContactsResource
+from infrastructure.resources.contacts import ContactResource

@@ -1,0 +1,47 @@
+version: '3'
+services:
+  phone-book:
+    build: .
+    image: phone-book
+    user: root
+    depends_on:
+      - mongodb
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/opt/PhoneBook
+    container_name: phone-book
+
+  mongodb:
+    image: mongo
+    user: root
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - DB_HOST:mongodb
+      - DB_PORT:27017
+      - DB_NAME:phonebook
+    container_name: mongodb
+
+#  cache:
+#    image: redis
+#    user: root
+#    restart: always
+#    ports:
+#      - 6379:6379
+#    volumes:
+#      - cache:/data
+#    container_name: redis
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - 8001:8001
+    environment:
+      - REDIS_URI=redis://redis:6379
+    container_name: redisinsight
+
+volumes:
+  cache:
+    driver: local
