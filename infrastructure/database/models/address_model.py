@@ -1,6 +1,5 @@
 from infrastructure.database.db import db
 
-
 class AddressModel(db.Model):
     __tablename__ = 'addresses'
 
@@ -9,6 +8,6 @@ class AddressModel(db.Model):
     city = db.Column(db.String(25), nullable=False)
     country = db.Column(db.String(25), nullable=False)
 
-    contact_id = db.Column(db.Integer, db.ForeignKey('Contacts.id'), nullable=False)
+    contact_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), nullable=False)
 
-    contact = db.relationship('ContactModel', backref="addresses")
+    contact = db.relationship('ContactModel', back_populates="addresses")

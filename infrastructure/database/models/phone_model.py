@@ -8,6 +8,6 @@ class PhoneModel(db.Model):
     type = db.Column(db.String(10), nullable=False)
     number = db.Column(db.String(13), nullable=False)
 
-    contact_id = db.Column(db.Integer, db.ForeignKey('Contacts.id'), nullable=False)
+    contact_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), nullable=False)
 
-    contact = db.relationship('ContactModel', backref="phones")
+    contact = db.relationship('ContactModel', back_populates="phones")
