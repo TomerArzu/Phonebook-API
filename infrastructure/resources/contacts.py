@@ -28,28 +28,28 @@ class ContactsResource(Resource):
         pass
 
     def post(self):
+        response = None
         requested_data = request.get_json()
         try:
             contact_result = contact_schema.load(requested_data)
-            phone_result = phone_schema.load(requested_data['phone'])
-            address_result = address_schema.load(requested_data['address'])
             new_contact, new_phone, new_address = self._handler.add_contact(
                 Contact(
                     first_name=contact_result['first_name'],
                     last_name=contact_result['last_name'],
-                    address=Address(**address_result),
-                    phone=Phone(**phone_result)
+                    address=Address(**contact_result['address']),
+                    phone=Phone(**contact_result['phone'])
                 )
             )
             # TODO: try to arrange it so it will be one `dump` function for all entities
             created_contact = contact_schema.dump(new_contact)
             created_contact['phone'] = phone_schema.dump(new_phone)
             created_contact['address'] = address_schema.dump(new_address)
-            return create_success_response(created_contact)
+            response = create_success_response(created_contact)
         except ValidationError as ve:
-            return create_error_response(ve.messages, 400)
+            response = create_error_response(ve.messages, 400)
         except PhonebookException as pbe:
-            return create_error_response(pbe.message, pbe.http_status_code)
+            response = create_error_response(pbe.message, pbe.http_status_code)
+        return response
 
 
 class ContactResource(Resource):
