@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields
 
-from infrastructure.contacts_pager import ContactsPager
+from infrastructure.infra_utils.contacts_pager import ContactsPager
 
 
 class PlainAddressSchema(Schema):

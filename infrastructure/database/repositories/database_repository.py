@@ -3,15 +3,15 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 
 from logger_instance import logger
-from domain.repositories import ContactsRepository
+from domain.repositories import ContactsPersistentRepository
 from domain.entities import Contact, Phone, Address
 from domain.exceptions import ContactNotFoundException, ContactCouldNotSaveException
 
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
-from infrastructure.contacts_pager import ContactsPager
+from infrastructure.infra_utils.contacts_pager import ContactsPager
 
 
-class DatabaseContactsRepository(ContactsRepository):
+class DatabaseContactsPersistentRepository(ContactsPersistentRepository):
     def __init__(self, db_instance):
         self._db_instance = db_instance
 
@@ -32,6 +32,7 @@ class DatabaseContactsRepository(ContactsRepository):
             self._save_address_details(contact_data.address, contact_model.id)
 
             self._db_instance.session.commit()
+
         except SQLAlchemyError as err:
             self._db_instance.session.rollback()
             logger.error("an error occurred during saving the contact data - error message: %s".format(err))

@@ -3,3 +3,4 @@ Flask-RESTful
 SQLAlchemy
 Flask-SQLAlchemy
 marshmallow
+redis
