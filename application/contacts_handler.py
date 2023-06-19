@@ -20,4 +20,4 @@ class ContactsHandler:
         return updated_contact
 
     def delete_contact(self, contact_id: str):
-        pass
+        self._database_contacts_repository.delete_contact(contact_id)

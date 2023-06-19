@@ -62,7 +62,8 @@ class ContactResource(Resource):
                 address=[Address(**address) for address in contact_result['address']],
                 phone=[Phone(**phone) for phone in contact_result['phone']]
             )
-            response = contact_schema.dump(self._handler.edit_contact(contact_id, contact))
+            updated_contact = contact_schema.dump(self._handler.edit_contact(contact_id, contact))
+            response = create_success_response(updated_contact)
         except ValidationError as ve:
             response = create_error_response(ve.messages, 400)
         except PhonebookException as pbe:
@@ -72,6 +73,7 @@ class ContactResource(Resource):
     def delete(self, contact_id):
         try:
             self._handler.delete_contact(contact_id)
-        except Exception as e:
-            print(e)
-        pass
+            response = create_success_response("Contact deleted!")
+        except PhonebookException as pbe:
+            response = create_error_response(pbe.message, pbe.http_status_code)
+        return response
