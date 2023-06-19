@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar
 
-from domain import Contact
+from domain.entities import Contact
 
 T = TypeVar("T")
 
