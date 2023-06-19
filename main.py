@@ -3,6 +3,8 @@ import os
 from flask import Flask
 from flask_restful import Api
 
+from dotenv import load_dotenv
+
 from application.cached_request_response_handler import CachedRequestResponseHandler
 from infrastructure.cache.redis import redis_client
 from infrastructure.cache.repositories.redis_cache_repository import RedisRequestResponseCachedRepository
@@ -17,16 +19,20 @@ from infrastructure.database import db
 from infrastructure.database.repositories import DatabaseContactsPersistentRepository
 
 logger.debug("initialize Phonebook app...")
-# Flask app
-app = Flask(__name__)
+
 
 
 # app factory
 def create_app():
+    # Flask app
+    app = Flask(__name__)
+
+    load_dotenv()
+
     app.config["API_TITLE"] = "Phonebook REST API"
     app.config["API_VERSION"] = "v1"
     app.config['JSON_SORT_KEYS'] = False
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///data.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "postgresql://rise:ing_up@postgres:5432/contacts")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PROPAGATE_EXCEPTIONS"] = True
 

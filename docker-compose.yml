@@ -6,11 +6,29 @@ services:
     user: root
     depends_on:
       - cache
+      - postgres
     ports:
       - "5000:5000"
     volumes:
       - .:/opt/PhoneBook
+    environment:
+      POSTGRES_USER: rise
+      POSTGRES_PASSWORD: ing_up
+      POSTGRES_DB: contacts
     container_name: phone-book
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    user: root
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: rise
+      POSTGRES_PASSWORD: ing_up
+      POSTGRES_DB: contacts
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
 
   cache:
     image: redis

@@ -9,6 +9,8 @@ RUN apt-get update
 RUN mkdir -p /opt/PhoneBook
 COPY . /opt/PhoneBook
 
+RUN  apt-get update && apt-get install -y
+RUN apt install libpq-dev python3-dev -y
 RUN pip install --no-cache-dir -r /opt/PhoneBook/requirements.txt
 
 ENV PYTHONUNBUFFERED 1

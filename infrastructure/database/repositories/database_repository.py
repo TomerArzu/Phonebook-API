@@ -35,9 +35,9 @@ class DatabaseContactsPersistentRepository(ContactsPersistentRepository):
 
         except SQLAlchemyError as err:
             self._db_instance.session.rollback()
-            logger.error("an error occurred during saving the contact data - error message: %s".format(err))
+            logger.error(f"an error occurred during saving the contact data - error message: {err}")
             raise ContactCouldNotSaveException(
-                message="an error occurred during saving the contact data - error message: %s".format(err),
+                message=f"an error occurred during saving the contact data - error message: {err}",
             ) from err
         return contact_model
 
@@ -56,9 +56,9 @@ class DatabaseContactsPersistentRepository(ContactsPersistentRepository):
             self._db_instance.session.commit()
         except SQLAlchemyError as err:
             self._db_instance.session.rollback()
-            logger.error("an error occurred during saving the contact data - error message: %s".format(err))
+            logger.error(f"an error occurred during saving the contact data - error message: {err}")
             raise ContactCouldNotSaveException(
-                message="an error occurred during saving the contact data - error message: %s".format(err),
+                message=f"an error occurred during saving the contact data - error message: {err}",
             ) from err
 
         return exists_contact_model
