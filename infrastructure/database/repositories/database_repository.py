@@ -5,7 +5,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from logger_instance import logger
 from domain.services import ContactsRepository
-from domain import Contact
+from domain.entities import Contact
+from domain.exceptions import ContactNotFoundException, ContactCouldNotSaveException
 
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
 
@@ -25,16 +26,19 @@ class DatabaseContactsRepository(ContactsRepository):
             contact_model = self._save_contact_details(contact_data.first_name, contact_data.last_name)
             self._db_instance.session.flush()
 
-            self._save_phone_details(contact_data.phone.type, contact_data.phone.number, contact_model.id)
-            self._save_address_details(contact_data.address.street, contact_data.address.city,
+            phone_model = self._save_phone_details(contact_data.phone.type, contact_data.phone.number, contact_model.id)
+            address_model = self._save_address_details(contact_data.address.street, contact_data.address.city,
                                        contact_data.address.country, contact_model.id)
 
             self._db_instance.session.commit()
         except SQLAlchemyError as err:
             self._db_instance.session.rollback()
-            logger.error("an error occurred while inserting the contact data - error message: %s".format(err))
-            # abort(500, message="an error occurred while inserting the contact data") TODO: remove this to resource
-        return contact_data
+            logger.error("an error occurred during saving the contact data - error message: %s".format(err))
+            raise ContactCouldNotSaveException(
+                message="an error occurred during saving the contact data - error message: %s".format(err),
+                source_error=err
+            ) from err
+        return contact_model, phone_model, address_model
 
     def edit_contact(self, contact_id: str, contact_data: dict):
         pass

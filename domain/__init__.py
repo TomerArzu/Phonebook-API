@@ -1,3 +1,2 @@
-from domain.entities import Address
-from domain.entities import Phone
-from domain.entities import Contact
+from domain import entities
+from domain import exceptions
