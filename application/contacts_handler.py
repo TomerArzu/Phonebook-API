@@ -12,10 +12,10 @@ class ContactsHandler:
         pass
 
     def add_contact(self, contact_data: Contact):
-        try:
-            self._database_contacts_repository.add_contact(contact_data)
-        except Exception as e:
-            print(e)
+        # try:
+        self._database_contacts_repository.add_contact(contact_data)
+        # except Exception as e:
+        #     print(e)
 
     def edit_contact(self, contact_id: str, contact_data: Contact):
         pass

@@ -1,14 +1,17 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Address:
     street: str
     city: str
     country: str
 
+
+@dataclass
 class Phone:
+    number: str
     type: str
-    phone_number: str
 
 
 @dataclass

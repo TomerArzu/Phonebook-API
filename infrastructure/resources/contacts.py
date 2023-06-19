@@ -5,7 +5,7 @@ from marshmallow import ValidationError
 from logger_instance import logger
 
 from application import ContactsHandler
-from domain import Contact
+from domain import Contact, Address, Phone
 from infrastructure.validators import PhoneSchema, AddressSchema, ContactSchema
 
 phone_schema = PhoneSchema()
@@ -28,8 +28,17 @@ class ContactsResource(Resource):
     def post(self):
         requested_data = request.get_json()
         try:
-            result = contact_schema.load(requested_data)
-            self._handler.add_contact(Contact(**result))
+            contact_result = contact_schema.load(requested_data)
+            phone_result = phone_schema.load(requested_data['phone'])
+            address_result = address_schema.load(requested_data['address'])
+            self._handler.add_contact(
+                Contact(
+                    first_name=contact_result['first_name'],
+                    last_name=contact_result['last_name'],
+                    address=Address(**address_result),
+                    phone=Phone(**phone_result)
+                )
+            )
         except ValidationError as ve:
             return {'error': ve.messages}, 400
 
