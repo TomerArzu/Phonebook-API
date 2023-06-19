@@ -12,8 +12,8 @@ class ContactsHandler:
         pass
 
     def add_contact(self, contact_data: Contact):
-        contact_model, phone_model, address_model = self._database_contacts_repository.add_contact(contact_data)
-        return contact_model, phone_model, address_model
+        contact_model = self._database_contacts_repository.add_contact(contact_data)
+        return contact_model
 
     def edit_contact(self, contact_id: str, contact_data: Contact):
         pass
