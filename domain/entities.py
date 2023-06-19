@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -18,5 +19,5 @@ class Phone:
 class Contact:
     first_name: str
     last_name: str
-    phone: Phone
-    address: Address
+    phone: List[Phone]
+    address: List[Address]
