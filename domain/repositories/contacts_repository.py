@@ -8,12 +8,12 @@ T = TypeVar("T")
 
 class ContactsRepository(ABC):
     @abstractmethod
-    def get_contacts(self):
+    def get_contacts(self, page: int):
         """Retrieve a list of contacts with pagination."""
         pass
 
     @abstractmethod
-    def search_contacts(self, query: str):
+    def search_contacts_by_first_name(self, page: int, first_name):
         """Search for contact based on the query string with pagination."""
         pass
 

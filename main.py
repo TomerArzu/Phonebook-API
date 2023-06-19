@@ -2,12 +2,16 @@ import os
 
 from flask import Flask
 from flask_restful import Api
+
+from infrastructure.validators import ContactSchema
+from infrastructure.validators.serializers import PagerSerializer
 from logger_instance import logger
 
 from application import ContactsHandler
 
 from infrastructure.resources import ContactsResource, ContactResource
-from infrastructure.database import DatabaseContactsRepository, db
+from infrastructure.database import db
+from infrastructure.database.repositories import DatabaseContactsRepository
 
 
 logger.debug("initialize Phonebook app...")
@@ -35,6 +39,8 @@ def create_app():
 
     contacts_handler = ContactsHandler(
         database_contacts_repository=database_contacts_repository,
+        contact_serializer=ContactSchema(),
+        pager_serializer=PagerSerializer()
     )
 
     api.add_resource(

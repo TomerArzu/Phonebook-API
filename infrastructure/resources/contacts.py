@@ -22,10 +22,15 @@ class ContactsResource(Resource):
     def get(self):
         # with or without query params (search or get all)
         try:
-            self._handler.get_contacts()
-        except Exception as e:
-            print(e)
-        pass
+            page_number = request.args.get('page')
+            first_name = request.args.get('first_name')
+            page_result = self._handler.get_contacts(int(page_number), first_name)
+            response = create_success_response(page_result)
+        except TypeError as te:
+            response = create_error_response("you must supply page number as numeric value", 400)
+        except PhonebookException as pbe:
+            response = create_error_response(pbe.message, pbe.http_status_code)
+        return response
 
     def post(self):
         requested_data = request.get_json()

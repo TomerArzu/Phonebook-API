@@ -13,3 +13,13 @@ class ContactNotFoundException(PhonebookException):
 class ContactCouldNotSaveException(PhonebookException):
     def __init__(self, message, http_status_code=500):
         super(ContactCouldNotSaveException, self).__init__(message, http_status_code)
+
+
+class InvalidPageNumerException(PhonebookException):
+    def __init__(self, message, http_status_code=400):
+        super(InvalidPageNumerException, self).__init__(message, http_status_code)
+
+
+class RequestedPageNotFoundException(PhonebookException):
+    def __init__(self, message, http_status_code=404):
+        super(RequestedPageNotFoundException, self).__init__(message, http_status_code)
