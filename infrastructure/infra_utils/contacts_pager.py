@@ -3,6 +3,7 @@ from math import ceil
 from sqlalchemy.orm import subqueryload
 
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
+from logger_instance import logger
 
 
 class ContactsPager:
@@ -38,5 +39,6 @@ class ContactsPager:
         query = ContactModel.query.join(sub_query, ContactModel.id == sub_query.c.id).join(PhoneModel,
                                                                                            ContactModel.id == PhoneModel.contact_id).join(
             AddressModel, ContactModel.id == AddressModel.contact_id)
+        logger.debug(f"executing the following query:\n{query}")
         contacts = query.all()
         return contacts

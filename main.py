@@ -3,6 +3,9 @@ import os
 from flask import Flask
 from flask_restful import Api
 
+from application.cached_request_response_handler import CachedRequestResponseHandler
+from infrastructure.cache.redis import redis_client
+from infrastructure.cache.repositories.redis_cache_repository import RedisRequestResponseCachedRepository
 from infrastructure.validators import ContactSchema
 from infrastructure.validators.serializers import PagerSerializer
 from logger_instance import logger
@@ -11,8 +14,7 @@ from application import ContactsHandler
 
 from infrastructure.resources import ContactsResource, ContactResource
 from infrastructure.database import db
-from infrastructure.database.repositories import DatabaseContactsRepository
-
+from infrastructure.database.repositories import DatabaseContactsPersistentRepository
 
 logger.debug("initialize Phonebook app...")
 # Flask app
@@ -35,7 +37,12 @@ def create_app():
 
     api = Api(app)
 
-    database_contacts_repository = DatabaseContactsRepository(db)
+    database_contacts_repository = DatabaseContactsPersistentRepository(db)
+    cache_request_repository = RedisRequestResponseCachedRepository(redis_client)
+
+    cached_request_response_handler = CachedRequestResponseHandler(
+        request_response_cached_repository=cache_request_repository
+    )
 
     contacts_handler = ContactsHandler(
         database_contacts_repository=database_contacts_repository,
@@ -47,7 +54,8 @@ def create_app():
         ContactsResource,
         '/api/v1/contacts',
         resource_class_kwargs={
-            'handler': contacts_handler,
+            'contact_handler': contacts_handler,
+            'cached_requests_handler': cached_request_response_handler,
         }
     )
 
@@ -55,7 +63,8 @@ def create_app():
         ContactResource,
         '/api/v1/contact/<string:contact_id>',
         resource_class_kwargs={
-            'handler': contacts_handler,
+            'contact_handler': contacts_handler,
+            'cached_requests_handler': cached_request_response_handler,
         }
     )
 
