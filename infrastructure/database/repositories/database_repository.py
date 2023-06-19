@@ -1,6 +1,5 @@
 from typing import List
 
-from flask_restful import abort
 from sqlalchemy.exc import SQLAlchemyError
 
 from logger_instance import logger
