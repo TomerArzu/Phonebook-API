@@ -8,7 +8,7 @@ class ContactModel(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
 
-    address = db.relationship("AddressModel", back_populates="contact", lazy='dynamic')
-    phone = db.relationship("PhoneModel", back_populates="contact", lazy='dynamic')
+    address = db.relationship("AddressModel", back_populates="contact", lazy='dynamic', cascade="all, delete")
+    phone = db.relationship("PhoneModel", back_populates="contact", lazy='dynamic', cascade="all, delete")
 
 

@@ -60,7 +60,11 @@ class DatabaseContactsRepository(ContactsRepository):
         return exists_contact_model
 
     def delete_contact(self, contact_id: str):
-        pass
+        exists_contact_model: ContactModel = ContactModel.query.get(contact_id)
+        if not exists_contact_model:
+            raise ContactNotFoundException(f"contact {contact_id} not found!")
+        self._db_instance.session.delete(exists_contact_model)
+        self._db_instance.session.commit()
 
     def _save_or_update_contact_details(self, first_name, last_name,
                                         contact_model: ContactModel = None) -> ContactModel:

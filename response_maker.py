@@ -1,7 +1,7 @@
 from typing import Dict
 
 
-def create_success_response(data: Dict[str, any]) -> tuple[dict, any]:
+def create_success_response(data: Dict[str, any] | str) -> tuple[dict, any]:
     return {
         'status': 'success',
         'data': data
