@@ -1,5 +1,7 @@
 from marshmallow import Schema, fields
 
+from infrastructure.contacts_pager import ContactsPager
+
 
 class PlainAddressSchema(Schema):
     id = fields.Int(dump_only=False, required=False)
@@ -34,3 +36,15 @@ class ContactSchema(PlainContactSchema):
 
     phone = fields.List(fields.Nested(PlainPhoneSchema()))
     address = fields.List(fields.Nested(PlainAddressSchema()))
+
+
+class PagerSerializer:
+    @staticmethod
+    def serialize_pager(pager: ContactsPager, page_results: list = None):
+        return {
+            "total_pages": pager.total_pages(),
+            "total_items": pager.total_items(),
+            "next": pager.next_page_index(),
+            "previous": pager.previous_page_index(),
+            "result": page_results,
+        }

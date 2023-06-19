@@ -3,22 +3,25 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 
 from logger_instance import logger
-from domain.services import ContactsRepository
+from domain.repositories import ContactsRepository
 from domain.entities import Contact, Phone, Address
 from domain.exceptions import ContactNotFoundException, ContactCouldNotSaveException
 
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
+from infrastructure.contacts_pager import ContactsPager
 
 
 class DatabaseContactsRepository(ContactsRepository):
     def __init__(self, db_instance):
         self._db_instance = db_instance
 
-    def get_contacts(self):
-        pass
+    def get_contacts(self, page: int):
+        pager = ContactsPager(ContactModel, page)
+        return pager
 
-    def search_contacts(self, query: str):
-        pass
+    def search_contacts_by_first_name(self, page: int, first_name):
+        pager = ContactsPager(ContactModel, page, first_name_filter=first_name)
+        return pager
 
     def add_contact(self, contact_data: Contact):
         try:

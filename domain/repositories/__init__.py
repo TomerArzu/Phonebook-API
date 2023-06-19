@@ -1,0 +1,1 @@
+from domain.repositories.contacts_repository import ContactsRepository
