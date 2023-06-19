@@ -16,7 +16,8 @@ class ContactsHandler:
         return contact_model
 
     def edit_contact(self, contact_id: str, contact_data: Contact):
-        pass
+        updated_contact = self._database_contacts_repository.edit_contact(contact_id, contact_data)
+        return updated_contact
 
     def delete_contact(self, contact_id: str):
         pass

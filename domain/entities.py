@@ -7,12 +7,14 @@ class Address:
     street: str
     city: str
     country: str
+    id: int = None
 
 
 @dataclass
 class Phone:
     number: str
     type: str
+    id: int = None
 
 
 @dataclass
@@ -21,3 +23,4 @@ class Contact:
     last_name: str
     phone: List[Phone]
     address: List[Address]
+    id: int = None
