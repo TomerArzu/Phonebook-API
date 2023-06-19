@@ -2,20 +2,20 @@ from marshmallow import Schema, fields
 
 
 class PlainAddressSchema(Schema):
-    id = fields.Str(dump_only=True)
+    id = fields.Int(dump_only=False, required=False)
     street = fields.Str(required=True)
     city = fields.Str(required=True)
     country = fields.Str(required=True)
 
 
 class PlainPhoneSchema(Schema):
-    id = fields.Str(dump_only=True)
+    id = fields.Int(dump_only=False, required=False)
     type = fields.Str(required=True)
     number = fields.Str(required=True)
 
 
 class PlainContactSchema(Schema):
-    id = fields.Str(dump_only=True)
+    id = fields.Int(dump_only=True)
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=True)
 

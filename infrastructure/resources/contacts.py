@@ -31,15 +31,13 @@ class ContactsResource(Resource):
         requested_data = request.get_json()
         try:
             contact_result = contact_schema.load(requested_data)
-
-            new_contact = self._handler.add_contact(
-                Contact(
-                    first_name=contact_result['first_name'],
-                    last_name=contact_result['last_name'],
-                    address=[Address(**address) for address in contact_result['address']],
-                    phone=[Phone(**phone) for phone in contact_result['phone']]
-                )
+            contact = Contact(
+                first_name=contact_result['first_name'],
+                last_name=contact_result['last_name'],
+                address=[Address(**address) for address in contact_result['address']],
+                phone=[Phone(**phone) for phone in contact_result['phone']]
             )
+            new_contact = self._handler.add_contact(contact)
             created_contact = contact_schema.dump(new_contact)
             response = create_success_response(created_contact)
         except ValidationError as ve:
@@ -57,10 +55,19 @@ class ContactResource(Resource):
     def put(self, contact_id):
         requested_data = request.get_json()
         try:
-            result = contact_schema.load(requested_data)
-            self._handler.edit_contact(contact_id, Contact(**result))
+            contact_result = contact_schema.load(requested_data)
+            contact = Contact(
+                first_name=contact_result['first_name'],
+                last_name=contact_result['last_name'],
+                address=[Address(**address) for address in contact_result['address']],
+                phone=[Phone(**phone) for phone in contact_result['phone']]
+            )
+            response = contact_schema.dump(self._handler.edit_contact(contact_id, contact))
         except ValidationError as ve:
-            return {'error': ve.messages}, 400
+            response = create_error_response(ve.messages, 400)
+        except PhonebookException as pbe:
+            response = create_error_response(pbe.message, pbe.http_status_code)
+        return response
 
     def delete(self, contact_id):
         try:

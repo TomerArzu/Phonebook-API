@@ -23,7 +23,7 @@ class ContactsRepository(ABC):
         pass
 
     @abstractmethod
-    def edit_contact(self, contact_id: str, contact_data: dict):
+    def edit_contact(self, contact_id: str, contact_data: Contact):
         """Edit an existing contact in the phonebook."""
         pass
 
