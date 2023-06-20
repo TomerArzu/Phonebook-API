@@ -8,7 +8,7 @@ from domain.entities import Contact, Phone, Address
 from domain.exceptions import ContactNotFoundException, ContactCouldNotSaveException
 
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
-from infrastructure.infra_utils.contacts_pager import ContactsPager
+from infrastructure.pagers.contacts_pager import ContactsPager
 
 
 class DatabaseContactsPersistentRepository(ContactsPersistentRepository):
