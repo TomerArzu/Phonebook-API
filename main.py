@@ -10,7 +10,7 @@ from infrastructure.cache.redis import redis_client
 from infrastructure.cache.repositories.redis_cache_repository import RedisRequestResponseCachedRepository
 from infrastructure.validators import ContactSchema
 from infrastructure.validators.serializers import PagerSerializer
-from logger_instance import logger
+from utils.logger_instance import logger
 
 from application import ContactsHandler
 

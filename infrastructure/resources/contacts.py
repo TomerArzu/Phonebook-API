@@ -2,15 +2,13 @@ from flask_restful import Resource
 from flask import request
 from marshmallow import ValidationError
 
-from application.cached_request_response_handler import CachedRequestResponseHandler
 from domain.exceptions import PhonebookException
 from infrastructure.validators.serializers import PagerSerializer
-from logger_instance import logger
+from utils.logger_instance import logger
 
-from application import ContactsHandler
 from domain.entities import Contact, Address, Phone
 from infrastructure.validators import PhoneSchema, AddressSchema, ContactSchema
-from response_maker import create_error_response, create_success_response
+from utils.response_maker import create_error_response, create_success_response
 
 phone_schema = PhoneSchema()
 address_schema = AddressSchema()

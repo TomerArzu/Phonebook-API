@@ -1,5 +1,5 @@
 import hashlib
-from logger_instance import logger
+from utils.logger_instance import logger
 
 from domain.repositories import RequestResponseCachedRepository
 

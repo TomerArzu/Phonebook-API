@@ -1,9 +1,7 @@
-from typing import List
-
 from domain.entities import Contact
-from domain.exceptions import InvalidPageNumerException, RequestedPageNotFoundException
+from domain.exceptions import InvalidPageNumerException
 from domain.repositories import ContactsPersistentRepository
-from logger_instance import logger
+from utils.logger_instance import logger
 
 
 class ContactsHandler:

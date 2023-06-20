@@ -1,9 +1,7 @@
 from math import ceil
 
-from sqlalchemy.orm import subqueryload
-
 from infrastructure.database.models import ContactModel, PhoneModel, AddressModel
-from logger_instance import logger
+from utils.logger_instance import logger
 
 
 class ContactsPager:

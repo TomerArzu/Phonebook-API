@@ -2,7 +2,7 @@ from typing import List
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from logger_instance import logger
+from utils.logger_instance import logger
 from domain.repositories import ContactsPersistentRepository
 from domain.entities import Contact, Phone, Address
 from domain.exceptions import ContactNotFoundException, ContactCouldNotSaveException
