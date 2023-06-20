@@ -9,7 +9,23 @@ Each phonebook contains contacts and each contacts can have multiple phone numbe
 * the following port must should be available: _5000 5432 6379_
     * **(optional)** in order to inspect redis with _redis insight_ you need to have the port _8001_ available too.
 * it will help you to use **Postman** to create to requests, but you can also use simple _curl_.
-  * there are file you can import to _postman_ with all the request (**_additional_files/Phonebook.postman_collection.json_**)
+    * there are file you can import to _postman_ with all the request (**_
+      additional_files/Phonebook.postman_collection.json_**)
+
+## How to make it work ?
+
+1. open any bash terminal
+2. clone project
+3. change directory to cloned project directory
+4. make sure that docker is up and running, and type:
+
+```
+docker-compose up -d
+```
+
+5. make any request that specify down below
+
+    * in order to view app's logs: `docker logs phone-book -f`
 
 ## System Design And Tech Stack
 
