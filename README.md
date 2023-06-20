@@ -8,7 +8,8 @@ Each phonebook contains contacts and each contacts can have multiple phone numbe
 * the application uses docker and docker-compose you need to have installed version of Docker.
 * the following port must should be available: _5000 5432 6379_
     * **(optional)** in order to inspect redis with _redis insight_ you need to have the port _8001_ available too.
-* it will help you to use **Postman** to create to requests but you can also use simple _curl_.
+* it will help you to use **Postman** to create to requests, but you can also use simple _curl_.
+  * there are file you can import to _postman_ with all the request (**_additional_files/Phonebook.postman_collection.json_**)
 
 ## System Design And Tech Stack
 

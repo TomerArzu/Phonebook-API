@@ -13,7 +13,6 @@ class RedisRequestResponseCachedRepository(RequestResponseCachedRepository):
         self._cache_valid = False
 
     def set_cache_request(self, request_key, response):
-        # request_data = json.dumps(request_key)
         self._redis_client.set(request_key, json.dumps(response))
 
     def get_cached_response(self, request_key):
